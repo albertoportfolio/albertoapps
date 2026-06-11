@@ -12,9 +12,9 @@ export const site = {
   tagline: "Convierto tu idea en una app real",
   email: "contact@albertoapps.info",
   // TODO: sustituye por tus perfiles reales
-  github: "https://github.com/TU_USUARIO",
-  linkedin: "https://www.linkedin.com/in/TU_PERFIL",
-  youtube: "https://www.youtube.com/@TU_CANAL",
+  github: "https://github.com/albertoportfolio",
+  linkedin: "https://es.linkedin.com/in/albertopegomez",
+  youtube: "https://www.youtube.com/@appsalberto",
 };
 
 export type Project = {
@@ -28,25 +28,25 @@ export type Project = {
 // TODO: sustituye por tus proyectos reales de GitHub
 export const projects: Project[] = [
   {
-    title: "App de ejemplo 1",
+    title: "BHealth - App de salud para bebés",
     description:
-      "Aplicación móvil multiplataforma desarrollada en Flutter con gestión de estado, API REST y diseño Material 3.",
+      "Aplicación móvil dedicada a la gestión de la salud de los bebés.",
     tags: ["Flutter", "Dart", "Firebase"],
-    repo: "https://github.com/TU_USUARIO/proyecto-1",
+    repo: "https://github.com/albertoportfolio/Bhealth",
   },
   {
-    title: "App de ejemplo 2",
+    title: "Maestro Bot - Juego de lógica",
     description:
-      "Web app moderna con React y TypeScript, animaciones fluidas y rendimiento optimizado.",
-    tags: ["React", "TypeScript", "Vite"],
-    repo: "https://github.com/TU_USUARIO/proyecto-2",
+      "Juego web y móvil hecho con React, phaser y react native",
+    tags: ["React", "TypeScript", "Phaser", "React Native"],
+    repo: "https://github.com/albertoportfolio/LightbotGame",
   },
   {
-    title: "App de ejemplo 3",
+    title: "Parallax Castle - Web de diseño parallax",
     description:
-      "Aplicación con autenticación, notificaciones push y sincronización en tiempo real.",
-    tags: ["Flutter", "Supabase"],
-    repo: "https://github.com/TU_USUARIO/proyecto-3",
+      "Web de diseño parallax con ambiente medieval hecha con React y framer motion",
+    tags: ["React", "Framer Motion"],
+    repo: "https://github.com/albertoportfolio/ParallaxCastleWeb",
   },
 ];
 
@@ -58,6 +58,6 @@ export type Video = {
 
 // TODO: sustituye por los IDs de tus vídeos reales de YouTube
 export const videos: Video[] = [
-  { title: "Demo de app Flutter", youtubeId: "dQw4w9WgXcQ" },
-  { title: "Presentación de proyecto web", youtubeId: "dQw4w9WgXcQ" },
+  { title: "Maestro Bot", youtubeId: "hRU5l6_9YFM" },
+  { title: "Web de diseño parallax", youtubeId: "C9Ct3F6JgtM" },
 ];

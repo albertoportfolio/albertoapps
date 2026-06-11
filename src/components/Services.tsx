@@ -18,7 +18,7 @@ const services = [
   },
   {
     icon: "🚀",
-    title: "De idea a producción",
+    title: "ERP y CRM",
     text: "Te acompaño en todo el ciclo: definición, desarrollo, publicación y mantenimiento.",
   },
 ];

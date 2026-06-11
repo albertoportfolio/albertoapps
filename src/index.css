@@ -637,6 +637,60 @@ a {
   border-color: #ff7a9a;
 }
 
+.phone-field {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.phone-field:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 108, 255, 0.2);
+}
+
+.phone-field.invalid {
+  border-color: #ff7a9a;
+}
+
+.phone-prefix {
+  background: #11121f;
+  border: none;
+  border-right: 1px solid var(--border);
+  padding: 0.8rem 0.5rem 0.8rem 0.8rem;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.phone-prefix:focus {
+  outline: none;
+}
+
+.phone-prefix option {
+  background: #11121f;
+  color: #f1f2f8;
+}
+
+.phone-field .phone-number {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.8rem 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.phone-field .phone-number:focus {
+  border: none;
+  box-shadow: none;
+}
+
 .field-error {
   color: #ff7a9a;
   font-size: 0.78rem;

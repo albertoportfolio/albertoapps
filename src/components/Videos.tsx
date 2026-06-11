@@ -13,7 +13,7 @@ export default function Videos() {
           transition={{ duration: 0.6 }}
         >
           <span className="section-kicker">Vídeos</span>
-          <h2 className="section-title">Mis apps en acción</h2>
+          <h2 className="section-title">Mis proyectos en acción</h2>
           <p className="section-sub">
             Demos en vídeo de algunos proyectos. Encuentra más en mi canal de
             YouTube.

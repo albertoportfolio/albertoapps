@@ -5,24 +5,56 @@ import { site } from "../data/site";
 type Status = "idle" | "sending" | "ok" | "error";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^\+?[0-9][0-9\s.-]{7,14}$/;
+
+const COUNTRIES = [
+  { flag: "🇪🇸", dial: "+34" },
+  { flag: "🇺🇸", dial: "+1" },
+  { flag: "🇬🇧", dial: "+44" },
+  { flag: "🇮🇪", dial: "+353" },
+  { flag: "🇫🇷", dial: "+33" },
+  { flag: "🇩🇪", dial: "+49" },
+  { flag: "🇵🇹", dial: "+351" },
+  { flag: "🇮🇹", dial: "+39" },
+  { flag: "🇳🇱", dial: "+31" },
+  { flag: "🇧🇪", dial: "+32" },
+  { flag: "🇨🇭", dial: "+41" },
+  { flag: "🇦🇹", dial: "+43" },
+  { flag: "🇸🇪", dial: "+46" },
+  { flag: "🇳🇴", dial: "+47" },
+  { flag: "🇩🇰", dial: "+45" },
+  { flag: "🇫🇮", dial: "+358" },
+  { flag: "🇵🇱", dial: "+48" },
+  { flag: "🇷🇴", dial: "+40" },
+  { flag: "🇬🇷", dial: "+30" },
+  { flag: "🇲🇽", dial: "+52" },
+  { flag: "🇦🇷", dial: "+54" },
+  { flag: "🇨🇴", dial: "+57" },
+  { flag: "🇨🇱", dial: "+56" },
+  { flag: "🇧🇷", dial: "+55" },
+  { flag: "🇵🇪", dial: "+51" },
+  { flag: "🇻🇪", dial: "+58" },
+  { flag: "🇦🇺", dial: "+61" },
+  { flag: "🇯🇵", dial: "+81" },
+];
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<{ email?: string; phone?: string; message?: string }>({});
+  const [phonePrefix, setPhonePrefix] = useState("+34");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const validate = (form: HTMLFormElement) => {
     const data = new FormData(form);
     const next: typeof errors = {};
     const email = String(data.get("email") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
+    const localNumber = phoneNumber.trim();
 
     if (!email) next.email = "El correo es obligatorio.";
     else if (!EMAIL_RE.test(email)) next.email = "Introduce un correo válido.";
 
-    if (!phone) next.phone = "El móvil es obligatorio.";
-    else if (!PHONE_RE.test(phone)) next.phone = "Introduce un móvil válido (ej. 612 345 678).";
+    if (!localNumber) next.phone = "El móvil es obligatorio.";
+    else if (localNumber.replace(/\D/g, "").length < 6) next.phone = "Introduce un número válido.";
 
     if (!message) next.message = "Cuéntame qué app o web necesitas.";
 
@@ -46,6 +78,7 @@ export default function Contact() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatus("ok");
       form.reset();
+      setPhoneNumber("");
     } catch {
       setStatus("error");
     }
@@ -95,6 +128,8 @@ export default function Contact() {
           <input type="hidden" name="_captcha" value="false" />
           {/* Honeypot anti-spam */}
           <input type="text" name="_honey" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
+          {/* Teléfono completo (prefijo + número) para FormSubmit */}
+          <input type="hidden" name="phone" value={`${phonePrefix} ${phoneNumber}`.trim()} />
 
           <div className="field">
             <label htmlFor="name">Nombre</label>
@@ -122,16 +157,30 @@ export default function Contact() {
               <label htmlFor="phone">
                 Móvil <span className="req">*</span>
               </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                required
-                placeholder="+34 612 345 678"
-                autoComplete="tel"
-                className={errors.phone ? "invalid" : ""}
-                aria-invalid={!!errors.phone}
-              />
+              <div className={`phone-field${errors.phone ? " invalid" : ""}`}>
+                <select
+                  className="phone-prefix"
+                  value={phonePrefix}
+                  onChange={e => setPhonePrefix(e.target.value)}
+                  aria-label="Prefijo del país"
+                >
+                  {COUNTRIES.map(c => (
+                    <option key={c.dial} value={c.dial}>
+                      {c.flag} {c.dial}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="phone"
+                  type="tel"
+                  className="phone-number"
+                  value={phoneNumber}
+                  onChange={e => setPhoneNumber(e.target.value)}
+                  placeholder="612 345 678"
+                  autoComplete="tel-national"
+                  aria-invalid={!!errors.phone}
+                />
+              </div>
               {errors.phone && <span className="field-error">{errors.phone}</span>}
             </div>
           </div>
