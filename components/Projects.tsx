@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { projects, site } from "../data/site";
 
