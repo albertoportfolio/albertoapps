@@ -19,9 +19,9 @@ const services = [
     text: "Interfaces cuidadas, animaciones fluidas y experiencia de usuario pensada para tu público.",
   },
   {
-    icon: "🚀",
-    title: "ERP y CRM",
-    text: "Te acompaño en todo el ciclo: definición, desarrollo, publicación y mantenimiento.",
+    icon: "📅",
+    title: "Reservas y fidelización",
+    text: "Sistemas de gestión de reservas y programas de fidelización con API en Java y Spring.",
   },
 ];
 
@@ -39,8 +39,8 @@ export default function Services() {
           <span className="section-kicker">Servicios</span>
           <h2 className="section-title">¿Qué puedo hacer por ti?</h2>
           <p className="section-sub">
-            Soluciones completas de desarrollo móvil y web para particulares,
-            startups y empresas.
+            Soluciones de gestión de reservas y fidelización de clientes para
+            negocios, startups y empresas.
           </p>
         </motion.div>
 

@@ -9,7 +9,7 @@ export const site = {
   name: "Alberto",
   brand: "AlbertoApps",
   role: "Desarrollador Freelance · Flutter & Web",
-  tagline: "Convierto tu idea en una app real",
+  tagline: "Apps de reservas y fidelización de clientes",
   email: "contact@albertoapps.info",
   // TODO: sustituye por tus perfiles reales
   github: "https://github.com/albertoportfolio",

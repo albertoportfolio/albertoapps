@@ -20,9 +20,9 @@ const item = {
 };
 
 const stats = [
-  { value: "100%", label: "Compromiso con tu proyecto" },
   { value: "Flutter", label: "Apps iOS y Android" },
-  { value: "Web", label: "React · TypeScript" },
+  { value: "React", label: "Webs · TypeScript" },
+  { value: "Java", label: "API con Spring" },
 ];
 
 export default function Hero() {
@@ -56,9 +56,10 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p variants={item}>
-            Desarrollo apps móviles con <strong>Flutter</strong> y webs modernas a
-            medida. Diseño cuidado, rendimiento y entrega profesional, de la idea a
-            producción.
+            Creo apps móviles y webs especializadas en{" "}
+            <strong>gestión de reservas</strong> y{" "}
+            <strong>fidelización de clientes</strong>. Diseño cuidado, rendimiento
+            y entrega profesional, de la idea a producción.
           </motion.p>
 
           <motion.div className="hero-actions" variants={item}>

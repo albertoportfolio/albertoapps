@@ -15,19 +15,21 @@ Landing page personal de **Alberto**, desarrollador freelance de **apps en Flutt
 
 | Tecnología | Uso |
 |---|---|
+| Next.js 15 (App Router) | Framework y prerenderizado estático (SSG) |
 | React 19 + TypeScript | UI |
-| Vite 8 | Build y dev server |
 | Framer Motion | Animaciones (scroll reveal, hover, menú móvil) |
 | CSS plano | Estilos mobile-first con custom properties |
 | FormSubmit | Envío del formulario sin backend |
+| Vercel | Despliegue |
 
 ## 🚀 Empezar
 
 ```bash
 pnpm install
-pnpm dev       # http://localhost:5173
-pnpm build     # build de producción en /dist
-pnpm preview   # previsualizar la build
+pnpm dev       # http://localhost:3000
+pnpm build     # build de producción
+pnpm start     # servir el build de producción
+pnpm lint      # next lint
 ```
 
 ## 📱 Responsive

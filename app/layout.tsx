@@ -15,18 +15,20 @@ const SITE_URL = "https://albertoapps.info";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AlbertoApps · Desarrollo de apps Flutter y webs a medida",
+    default: "AlbertoApps · Apps de reservas y fidelización de clientes",
     template: "%s · AlbertoApps",
   },
   description:
-    "Desarrollador freelance de apps móviles en Flutter (iOS y Android) y webs modernas con React. Cuéntame tu idea y la convierto en una app real. Presupuesto sin compromiso.",
+    "Desarrollador freelance de apps móviles en Flutter y webs con React, especializadas en gestión de reservas y fidelización de clientes. API con Java y Spring. Presupuesto sin compromiso.",
   keywords: [
+    "app de reservas",
+    "gestión de reservas",
+    "fidelización de clientes",
     "desarrollador Flutter freelance",
     "apps Flutter",
-    "desarrollo de apps móviles",
-    "desarrollador web freelance",
-    "apps iOS y Android",
     "desarrollo web React",
+    "API Java Spring",
+    "apps iOS y Android",
     "AlbertoApps",
   ],
   authors: [{ name: site.name }],
@@ -39,9 +41,9 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: SITE_URL,
     siteName: site.brand,
-    title: "AlbertoApps · Desarrollo de apps Flutter y webs",
+    title: "AlbertoApps · Apps de reservas y fidelización",
     description:
-      "Desarrollador freelance de apps móviles en Flutter y webs modernas. Pide presupuesto sin compromiso.",
+      "Apps Flutter y webs React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring. Pide presupuesto sin compromiso.",
     images: [
       {
         url: "/aplogo.png",
@@ -53,9 +55,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AlbertoApps · Desarrollo de apps Flutter y webs",
+    title: "AlbertoApps · Apps de reservas y fidelización",
     description:
-      "Desarrollador freelance de apps móviles en Flutter y webs modernas. Pide presupuesto sin compromiso.",
+      "Apps Flutter y webs React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring. Pide presupuesto sin compromiso.",
     images: ["/aplogo.png"],
   },
   robots: {
@@ -82,9 +84,18 @@ const jsonLd = {
   image: `${SITE_URL}/aplogo.png`,
   email: site.email,
   description:
-    "Desarrollador freelance de apps móviles en Flutter y webs modernas con React.",
+    "Apps móviles en Flutter y webs con React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring.",
   areaServed: "ES",
-  knowsAbout: ["Flutter", "Dart", "React", "TypeScript", "Desarrollo web", "Apps móviles"],
+  knowsAbout: [
+    "Flutter",
+    "Dart",
+    "React",
+    "TypeScript",
+    "Java",
+    "Spring",
+    "Gestión de reservas",
+    "Fidelización de clientes",
+  ],
   sameAs: [site.github, site.linkedin, site.youtube],
   founder: {
     "@type": "Person",
