@@ -15,15 +15,19 @@ const SITE_URL = "https://albertoapps.info";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AlbertoApps · Apps de reservas y fidelización de clientes",
+    default:
+      "AlbertoApps · Apps Para Clínicas Y Centros De Salud.",
     template: "%s · AlbertoApps",
   },
   description:
-    "Desarrollador freelance de apps móviles en Flutter y webs con React, especializadas en gestión de reservas y fidelización de clientes. API con Java y Spring. Presupuesto sin compromiso.",
+    "Desarrollador freelance de apps móviles en Flutter y webs con React, especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud. API con Java y Spring. Presupuesto sin compromiso.",
   keywords: [
-    "app de reservas",
-    "gestión de reservas",
-    "fidelización de clientes",
+    "apps para clínicas",
+    "apps para centros de salud",
+    "seguimiento de pacientes",
+    "fidelización de pacientes",
+    "app de seguimiento de pacientes",
+    "software para clínicas",
     "desarrollador Flutter freelance",
     "apps Flutter",
     "desarrollo web React",
@@ -41,9 +45,10 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: SITE_URL,
     siteName: site.brand,
-    title: "AlbertoApps · Apps de reservas y fidelización",
+    title:
+      "AlbertoApps · Apps Para Clínicas Y Centros De Salud.",
     description:
-      "Apps Flutter y webs React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring. Pide presupuesto sin compromiso.",
+      "Apps Flutter y webs React especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud, con API en Java y Spring. Pide presupuesto sin compromiso.",
     images: [
       {
         url: "/aplogo.png",
@@ -55,9 +60,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AlbertoApps · Apps de reservas y fidelización",
+    title:
+      "AlbertoApps · Apps Para Clínicas Y Centros De Salud.",
     description:
-      "Apps Flutter y webs React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring. Pide presupuesto sin compromiso.",
+      "Apps Flutter y webs React especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud, con API en Java y Spring. Pide presupuesto sin compromiso.",
     images: ["/aplogo.png"],
   },
   robots: {
@@ -84,7 +90,7 @@ const jsonLd = {
   image: `${SITE_URL}/aplogo.png`,
   email: site.email,
   description:
-    "Apps móviles en Flutter y webs con React especializadas en gestión de reservas y fidelización de clientes, con API en Java y Spring.",
+    "Apps móviles en Flutter y webs con React especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud, con API en Java y Spring.",
   areaServed: "ES",
   knowsAbout: [
     "Flutter",
@@ -93,8 +99,9 @@ const jsonLd = {
     "TypeScript",
     "Java",
     "Spring",
-    "Gestión de reservas",
-    "Fidelización de clientes",
+    "Apps para clínicas",
+    "Seguimiento de pacientes",
+    "Fidelización de pacientes",
   ],
   sameAs: [site.github, site.linkedin, site.youtube],
   founder: {

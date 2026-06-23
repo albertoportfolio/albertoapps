@@ -57,9 +57,9 @@ export default function Hero() {
 
           <motion.p variants={item}>
             Creo apps móviles y webs especializadas en{" "}
-            <strong>gestión de reservas</strong> y{" "}
-            <strong>fidelización de clientes</strong>. Diseño cuidado, rendimiento
-            y entrega profesional, de la idea a producción.
+            <strong>seguimiento de pacientes</strong> y{" "}
+            <strong>fidelización</strong> para clínicas y centros de salud. Diseño
+            cuidado, rendimiento y entrega profesional, de la idea a producción.
           </motion.p>
 
           <motion.div className="hero-actions" variants={item}>

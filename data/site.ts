@@ -9,7 +9,7 @@ export const site = {
   name: "Alberto",
   brand: "AlbertoApps",
   role: "Desarrollador Freelance · Flutter & Web",
-  tagline: "Apps de reservas y fidelización de clientes",
+  tagline: "Apps Especializadas Para Clínicas Y Centros De Salud",
   email: "contact@albertoapps.info",
   // TODO: sustituye por tus perfiles reales
   github: "https://github.com/albertoportfolio",
@@ -28,7 +28,7 @@ export type Project = {
 // TODO: sustituye por tus proyectos reales de GitHub
 export const projects: Project[] = [
   {
-    title: "BHealth - App de salud para bebés",
+    title: "H-Baby - App de salud para bebés",
     description:
       "Aplicación móvil dedicada a la gestión de la salud de los bebés.",
     tags: ["Flutter", "Dart", "Firebase"],
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     title: "Maestro Bot - Juego de lógica",
     description:
       "Juego web y móvil hecho con React, phaser y react native",
-    tags: ["React", "TypeScript", "Phaser", "React Native"],
+    tags: ["React", "TypeScript", "Phaser", "React Native", "Node.js"],
     repo: "https://github.com/albertoportfolio/LightbotGame",
   },
   {

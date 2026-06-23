@@ -20,8 +20,8 @@ const services = [
   },
   {
     icon: "📅",
-    title: "Reservas y fidelización",
-    text: "Sistemas de gestión de reservas y programas de fidelización con API en Java y Spring.",
+    title: "Seguimiento y fidelización",
+    text: "Sistemas de seguimiento de pacientes y programas de fidelización para clínicas y centros de salud con API en Java y Spring.",
   },
 ];
 
@@ -39,8 +39,8 @@ export default function Services() {
           <span className="section-kicker">Servicios</span>
           <h2 className="section-title">¿Qué puedo hacer por ti?</h2>
           <p className="section-sub">
-            Soluciones de gestión de reservas y fidelización de clientes para
-            negocios, startups y empresas.
+            Soluciones de seguimiento y fidelización de pacientes para clínicas y
+            centros de salud.
           </p>
         </motion.div>
 
