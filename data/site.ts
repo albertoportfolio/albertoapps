@@ -59,5 +59,5 @@ export type Video = {
 // TODO: sustituye por los IDs de tus vídeos reales de YouTube
 export const videos: Video[] = [
   { title: "Maestro Bot", youtubeId: "hRU5l6_9YFM" },
-  { title: "Web de diseño parallax", youtubeId: "C9Ct3F6JgtM" },
+  { title: "Health Baby", youtubeId: "33YsocPVqVk" },
 ];
