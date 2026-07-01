@@ -4,35 +4,36 @@ Landing page de Alberto, desarrollador freelance de apps Flutter y webs. Una sol
 
 ## Stack
 
-- **Next.js 15 (App Router)** + React 19 + TypeScript
-- Prerenderizado estático (SSG) para SEO; despliegue en **Vercel**
-- Framer Motion para todas las animaciones (componentes interactivos con `"use client"`)
-- CSS plano en `app/globals.css` (sin Tailwind ni CSS-in-JS) con custom properties en `:root`
-- Fuente Inter vía `next/font` (variable `--font-inter`)
+- **Astro 5** + islas de **React 19** + TypeScript
+- Salida estática (SSG) para SEO; despliegue en **Vercel**
+- Framer Motion para todas las animaciones (los componentes React se hidratan con `client:load` en `src/pages/index.astro`)
+- CSS plano en `src/styles/globals.css` (sin CSS-in-JS) con custom properties en `:root`. Tailwind se usa de forma acotada (solo utilidades, sin preflight) para el mockup de iPhone de Magic UI; se procesa vía PostCSS (`postcss.config.mjs` + `tailwind.config.ts`)
+- Fuente Inter autoalojada vía `@fontsource/inter` (importada en `Layout.astro`, expuesta como `--font-inter`)
 - Gestor de paquetes: **pnpm**
 
 ## Comandos
 
 ```bash
-pnpm dev      # servidor de desarrollo (next dev)
-pnpm build    # next build
-pnpm start    # servir el build de producción
-pnpm lint     # next lint
+pnpm dev      # servidor de desarrollo (astro dev)
+pnpm build    # astro build (genera dist/)
+pnpm start    # astro preview (sirve el build de producción)
+pnpm lint     # astro check (tipos + diagnósticos)
 ```
 
 ## Arquitectura
 
-- `app/layout.tsx` — layout raíz: `<html lang="es">`, **metadatos SEO** (Metadata API: title/description, OpenGraph, Twitter, robots, canonical), fuente Inter y **JSON-LD** (`ProfessionalService`). El dominio canónico está en la constante `SITE_URL`.
-- `app/page.tsx` — Server Component que compone las secciones.
-- `app/sitemap.ts` y `app/robots.ts` — generan `sitemap.xml` y `robots.txt`.
-- `data/site.ts` — **única fuente de datos**: enlaces (GitHub, LinkedIn, YouTube), email, proyectos y vídeos. Cualquier dato personal o de contenido se edita aquí, nunca hardcodeado en componentes.
-- `components/` — un componente por sección (`Navbar`, `Hero`, `Services`, `Projects`, `Videos`, `Contact`, `Footer`). Todos los que usan hooks o framer-motion llevan `"use client"` en la primera línea; `Footer` es Server Component.
-- `app/globals.css` — todos los estilos, organizados por sección con comentarios separadores. Mobile-first.
+- `src/layouts/Layout.astro` — layout raíz: `<html lang="es">`, **metadatos SEO** (title/description, keywords, OpenGraph, Twitter, robots, canonical), fuente Inter y **JSON-LD** (`ProfessionalService`). El dominio canónico está en la constante `SITE_URL`.
+- `src/pages/index.astro` — única página: compone las secciones dentro del layout. Los componentes interactivos llevan `client:load`; `Footer` se renderiza estático (sin directiva).
+- `astro.config.mjs` — `site` (dominio canónico) e integraciones `@astrojs/react` y `@astrojs/sitemap` (genera `sitemap-index.xml` en el build).
+- `public/robots.txt` — robots estático; apunta al sitemap.
+- `src/data/site.ts` — **única fuente de datos**: enlaces (GitHub, LinkedIn, YouTube), email, proyectos y vídeos. Cualquier dato personal o de contenido se edita aquí, nunca hardcodeado en componentes.
+- `src/components/` — un componente React (`.tsx`) por sección (`Navbar`, `Hero`, `Services`, `Projects`, `Videos`, `Contact`, `Footer`); `magicui/iphone.tsx` es el mockup del Hero.
+- `src/styles/globals.css` — todos los estilos, organizados por sección con comentarios separadores. Mobile-first.
 
 ## SEO
 
-- Editar título/descripción/keywords y datos OpenGraph en `metadata` de `app/layout.tsx`.
-- Cambiar el dominio en `SITE_URL` (`app/layout.tsx`), `app/sitemap.ts` y `app/robots.ts` si no es `https://albertoapps.info`.
+- Editar título/descripción/keywords y datos OpenGraph en `src/layouts/Layout.astro`.
+- Cambiar el dominio en `SITE_URL` (`src/layouts/Layout.astro`), `site` en `astro.config.mjs` y `public/robots.txt` si no es `https://albertoapps.info`.
 - Imagen OG: `public/aplogo.png` (idealmente sustituir por una 1200×630 dedicada).
 
 ## Convenciones

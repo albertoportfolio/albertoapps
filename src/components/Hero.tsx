@@ -1,5 +1,3 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { site } from "../data/site";
 import { Iphone } from "./magicui/iphone";

@@ -11,12 +11,12 @@ documenta cómo está montado para editarlo sin romper nada.
 
 ## Archivos clave
 
-- `components/magicui/iphone.tsx` — componente Magic UI (iPhone 15 Pro). Es un SVG con
+- `src/components/magicui/iphone.tsx` — componente Magic UI (iPhone 15 Pro). Es un SVG con
   Dynamic Island. Adaptado al proyecto: además de `src`/`videoSrc` acepta **`children`**
   para renderizar una pantalla a medida dentro del marco.
-- `components/Hero.tsx` — usa `<Iphone>` con la pantalla (`.phone-screen`) como `children`.
+- `src/components/Hero.tsx` — usa `<Iphone>` con la pantalla (`.phone-screen`) como `children`.
   El teléfono va en la columna `.hero-visual` con animación de entrada + flotación.
-- `app/globals.css` — todos los estilos del mockup, en el bloque
+- `src/styles/globals.css` — todos los estilos del mockup, en el bloque
   `/* ---------- Hero: layout de dos columnas + iPhone mockup ---------- */`
   (clases con prefijo `.ps-*` para la pantalla, más `.hero-phone` / `.hero-visual`).
 
@@ -24,8 +24,8 @@ documenta cómo está montado para editarlo sin romper nada.
 
 - El proyecto NO usa Tailwind salvo **exclusivamente para este componente**.
 - Config: `tailwind.config.ts` (con `corePlugins.preflight: false`), `postcss.config.mjs`,
-  y `@tailwind utilities;` al inicio de `app/globals.css`. No añadir `@tailwind base`.
-- Las clases Tailwind solo deben aparecer dentro de `components/magicui/iphone.tsx`.
+  y `@tailwind utilities;` al inicio de `src/styles/globals.css`. No añadir `@tailwind base`.
+- Las clases Tailwind solo deben aparecer dentro de `src/components/magicui/iphone.tsx`.
   El resto de la UI (la pantalla `.ps-*`) usa CSS plano.
 
 ## Estructura de la pantalla (`.phone-screen`)
@@ -45,7 +45,7 @@ documenta cómo está montado para editarlo sin romper nada.
 - **Tiles/acciones:** blancos con sombra; texto `#0f1f42`, subtítulos `#64748b`.
 - **Acento azul:** `linear-gradient(120deg, #2563eb, #3b82f6)`.
 - **Marco del iPhone:** gris apagado `#4a4b55` (variante clara editada en `iphone.tsx`).
-  Para cambiarlo, editar el valor `#4a4b55` en `components/magicui/iphone.tsx`.
+  Para cambiarlo, editar el valor `#4a4b55` en `src/components/magicui/iphone.tsx`.
   Envolver en `className="...dark"` activaría la variante oscura de Magic UI (`#404040`).
 
 ## Reglas al editar

@@ -70,7 +70,6 @@ export function Iphone({
 
       {!hasVideo && src && (
         <div className="pointer-events-none absolute z-0 overflow-hidden" style={slotStyle}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={src} alt="" className="block size-full object-cover object-top" />
         </div>
       )}

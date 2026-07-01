@@ -1,0 +1,110 @@
+---
+// Layout raíz: metadatos SEO (title/description, OpenGraph, Twitter, robots,
+// canonical), fuente Inter autoalojada (@fontsource) y JSON-LD (ProfessionalService).
+// El dominio canónico está en la constante SITE_URL (mantener en sync con
+// `site` en astro.config.mjs y public/robots.txt).
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "../styles/globals.css";
+import { site } from "../data/site";
+
+export const SITE_URL = "https://albertoapps.info";
+
+const TITLE = "AlbertoApps · Apps Para Clínicas Y Centros De Salud.";
+const DESCRIPTION =
+  "Desarrollador freelance de apps móviles en Flutter y webs con React, especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud. API con Java y Spring. Presupuesto sin compromiso.";
+const OG_DESCRIPTION =
+  "Apps Flutter y webs React especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud, con API en Java y Spring. Pide presupuesto sin compromiso.";
+const KEYWORDS = [
+  "apps para clínicas",
+  "apps para centros de salud",
+  "seguimiento de pacientes",
+  "fidelización de pacientes",
+  "app de seguimiento de pacientes",
+  "software para clínicas",
+  "desarrollador Flutter freelance",
+  "apps Flutter",
+  "desarrollo web React",
+  "API Java Spring",
+  "apps iOS y Android",
+  "AlbertoApps",
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.brand,
+  url: SITE_URL,
+  image: `${SITE_URL}/aplogo.png`,
+  email: site.email,
+  description:
+    "Apps móviles en Flutter y webs con React especializadas en seguimiento y fidelización de pacientes para clínicas y centros de salud, con API en Java y Spring.",
+  areaServed: "ES",
+  knowsAbout: [
+    "Flutter",
+    "Dart",
+    "React",
+    "TypeScript",
+    "Java",
+    "Spring",
+    "Apps para clínicas",
+    "Seguimiento de pacientes",
+    "Fidelización de pacientes",
+  ],
+  sameAs: [site.github, site.linkedin, site.youtube],
+  founder: {
+    "@type": "Person",
+    name: site.name,
+    jobTitle: site.role,
+    sameAs: [site.github, site.linkedin, site.youtube],
+  },
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{TITLE}</title>
+    <meta name="description" content={DESCRIPTION} />
+    <meta name="keywords" content={KEYWORDS.join(", ")} />
+    <meta name="author" content={site.name} />
+    <link rel="canonical" href={`${SITE_URL}/`} />
+    <link rel="icon" href="/aplogo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/aplogo.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1"
+    />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content={SITE_URL} />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={TITLE} />
+    <meta property="og:description" content={OG_DESCRIPTION} />
+    <meta property="og:image" content={`${SITE_URL}/aplogo.png`} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="AlbertoApps" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={TITLE} />
+    <meta name="twitter:description" content={OG_DESCRIPTION} />
+    <meta name="twitter:image" content={`${SITE_URL}/aplogo.png`} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
