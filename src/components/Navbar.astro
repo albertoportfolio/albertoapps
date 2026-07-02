@@ -1,0 +1,70 @@
+---
+import { site } from "../data/site";
+
+const links = [
+  { href: "#servicios", label: "Servicios" },
+  { href: "#proyectos", label: "Proyectos" },
+  { href: "#videos", label: "Vídeos" },
+  { href: "#contacto", label: "Contacto" },
+];
+---
+
+<header class="navbar">
+  <nav class="container navbar-inner" aria-label="Principal">
+    <a href="#inicio" class="brand">
+      Alberto<span>Apps</span>
+    </a>
+
+    <ul class="nav-links">
+      {links.map((l) => (
+        <li>
+          <a href={l.href}>{l.label}</a>
+        </li>
+      ))}
+    </ul>
+
+    <a href="#contacto" class="btn btn-primary nav-cta">
+      Pide presupuesto
+    </a>
+
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      ☰
+    </button>
+  </nav>
+
+  <div class="nav-mobile">
+    <div class="nav-mobile-inner">
+      <ul class="container">
+        {links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
+        <li>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector(".navbar")!;
+  const toggle = header.querySelector<HTMLButtonElement>(".nav-toggle")!;
+
+  const setOpen = (open: boolean) => {
+    header.classList.toggle("nav-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    toggle.textContent = open ? "✕" : "☰";
+  };
+
+  toggle.addEventListener("click", () =>
+    setOpen(!header.classList.contains("nav-open"))
+  );
+
+  // El menú móvil se cierra al pulsar cualquier enlace
+  header
+    .querySelectorAll(".nav-mobile a")
+    .forEach((a) => a.addEventListener("click", () => setOpen(false)));
+</script>

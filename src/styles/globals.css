@@ -3,10 +3,6 @@
    Mobile-first: estilos base para móvil, media queries hacia arriba
    ============================================================ */
 
-/* Tailwind: solo utilidades, para el componente Magic UI (iPhone mockup).
-   Sin @tailwind base para no resetear los estilos del proyecto. */
-@tailwind utilities;
-
 :root {
   /* Fuente Inter autoalojada vía @fontsource (importada en Layout.astro) */
   --font-inter: "Inter";
@@ -95,6 +91,57 @@ a {
   font-size: 1rem;
 }
 
+/* ---------- Reveals de scroll (sustituyen a framer-motion) ----------
+   Solo se ocultan bajo html.js (clase añadida por un script inline en el
+   Layout): sin JavaScript el contenido es siempre visible. El observer
+   de Layout.astro añade .in-view una única vez al entrar en viewport.
+   El retardo escalonado se pasa con --rd; la dirección con --rx/--ry/--rs. */
+
+.js .reveal {
+  opacity: 0;
+}
+
+.js .reveal.in-view {
+  opacity: 1;
+  /* Fill "backwards" (no "both"): al terminar, la animación deja de aplicar
+     transform y no bloquea los transforms de hover de .card */
+  animation: reveal-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--rd, 0s);
+}
+
+.reveal-left {
+  --rx: -28px;
+  --ry: 0px;
+}
+
+.reveal-right {
+  --rx: 28px;
+  --ry: 0px;
+}
+
+.reveal-scale {
+  --ry: 0px;
+  --rs: 0.96;
+}
+
+.reveal-fade {
+  --ry: 0px;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--rx, 0px), var(--ry, 24px)) scale(var(--rs, 1));
+  }
+}
+
+/* Fundido sin desplazamiento: lo usan los reveals bajo prefers-reduced-motion */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 /* ---------- Botones ---------- */
 
 .btn {
@@ -109,6 +156,10 @@ a {
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 .btn-primary {
@@ -148,6 +199,14 @@ a {
   backdrop-filter: blur(14px);
   background: rgba(10, 10, 20, 0.7);
   border-bottom: 1px solid var(--border);
+  animation: nav-drop 0.6s ease-out both;
+}
+
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
 }
 
 .navbar-inner {
@@ -199,9 +258,25 @@ a {
   line-height: 1;
 }
 
+/* Menú móvil: animación de altura con grid-template-rows (0fr → 1fr) */
 .nav-mobile {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  border-top: 1px solid transparent;
+  transition: grid-template-rows 0.25s ease, opacity 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.nav-open .nav-mobile {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  border-top-color: var(--border);
+}
+
+.nav-mobile-inner {
   overflow: hidden;
-  border-top: 1px solid var(--border);
+  min-height: 0;
 }
 
 .nav-mobile ul {
@@ -263,6 +338,7 @@ a {
   background: #7c6cff;
   top: -120px;
   right: -140px;
+  animation: blob-drift-1 18s ease-in-out infinite;
 }
 
 .hero-blob-2 {
@@ -272,6 +348,33 @@ a {
   bottom: -160px;
   left: -160px;
   opacity: 0.3;
+  animation: blob-drift-2 22s ease-in-out infinite;
+}
+
+@keyframes blob-drift-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.1);
+  }
+  66% {
+    transform: translate(20px, -20px) scale(0.95);
+  }
+}
+
+@keyframes blob-drift-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, -40px) scale(0.9);
+  }
+  66% {
+    transform: translate(-30px, 20px) scale(1.1);
+  }
 }
 
 .hero-content {
@@ -279,6 +382,27 @@ a {
   text-align: center;
   max-width: 760px;
   margin-inline: auto;
+}
+
+/* Entrada escalonada del hero (badge → h1 → p → acciones → stats) */
+.hero-content > * {
+  animation: reveal-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-content > :nth-child(1) {
+  animation-delay: 0.2s;
+}
+.hero-content > :nth-child(2) {
+  animation-delay: 0.35s;
+}
+.hero-content > :nth-child(3) {
+  animation-delay: 0.5s;
+}
+.hero-content > :nth-child(4) {
+  animation-delay: 0.65s;
+}
+.hero-content > :nth-child(5) {
+  animation-delay: 0.8s;
 }
 
 .hero-badge {
@@ -365,12 +489,63 @@ a {
   display: flex;
   justify-content: center;
   order: 2;
+  animation: hero-visual-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+
+@keyframes hero-visual-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) rotate(-3deg);
+  }
 }
 
 .hero-phone {
   position: relative;
   width: min(280px, 78vw);
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+  animation: phone-float 6s ease-in-out infinite;
+}
+
+@keyframes phone-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* ----- Marco del iPhone (Magic UI portado a CSS plano) -----
+   Porcentajes derivados de la geometría del SVG (pantalla de 389.5×843.5
+   dentro de un marco de 433×882, radio 55.75). */
+
+.iphone {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  line-height: 1;
+  aspect-ratio: 433 / 882;
+}
+
+.iphone-screen {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  left: 4.9076%;
+  top: 2.1825%;
+  width: 89.9538%;
+  height: 95.6349%;
+  border-radius: 14.3132% / 6.6094%;
+}
+
+.iphone-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0);
 }
 
 /* Resplandor detrás del teléfono */
@@ -655,12 +830,14 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.8rem;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .card:hover {
   border-color: rgba(124, 108, 255, 0.5);
   background: var(--surface-strong);
+  transform: translateY(-6px);
 }
 
 .card-icon {
@@ -798,6 +975,57 @@ a {
   border: 0;
 }
 
+/* Facade de YouTube: miniatura + botón de play; el iframe solo se
+   inyecta al pulsar (evita cargar el player en el primer render) */
+.video-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 0;
+  border: none;
+  background: #000;
+  cursor: pointer;
+}
+
+.video-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.video-facade:hover img {
+  opacity: 1;
+}
+
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 10, 20, 0.75);
+  color: #fff;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.video-facade:hover .video-play {
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.video-play svg {
+  width: 26px;
+  height: 26px;
+}
+
 .video-card h3 {
   padding: 1rem 1.4rem 1.2rem;
   font-size: 1rem;
@@ -805,15 +1033,17 @@ a {
 
 /* ---------- Contacto ---------- */
 
+/* minmax(0, 1fr): las columnas pueden encoger por debajo del min-content
+   de los inputs (size intrínseco) y no desbordan el viewport en móvil */
 .contact-wrap {
   display: grid;
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 900px) {
   .contact-wrap {
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     align-items: start;
   }
 }
@@ -876,12 +1106,12 @@ a {
 .field-row {
   display: grid;
   gap: 1.1rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 560px) {
   .field-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
@@ -987,6 +1217,14 @@ a {
   text-align: center;
   padding: 0.7rem;
   border-radius: 12px;
+  animation: status-in 0.3s ease;
+}
+
+@keyframes status-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 
 .form-status.ok {
@@ -1059,7 +1297,10 @@ a {
   fill: var(--text);
 }
 
-/* Respeta la preferencia de menos movimiento */
+/* Respeta la preferencia de menos movimiento.
+   animation-iteration-count: 1 es imprescindible: sin él, las animaciones
+   infinitas (flotación del iPhone, blobs) se reinician cada 0.01ms y el
+   elemento vibra en vez de quedarse quieto. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1068,6 +1309,21 @@ a {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* Excepción: la flotación del iPhone es sutil y se mantiene siempre
+     (decisión de diseño); el resto de animaciones sí se desactivan */
+  .hero-phone {
+    animation-duration: 6s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  /* Reveals de scroll: fundido puro (sin desplazamiento) en vez de
+     aparición instantánea, para que no se vean a saltos */
+  .js .reveal.in-view {
+    animation-name: fade-in;
+    animation-duration: 0.5s !important;
   }
 }

@@ -11,6 +11,17 @@ import "@fontsource/inter/800.css";
 import "../styles/globals.css";
 import { site } from "../data/site";
 
+// Preload de los woff2 latinos visibles above-the-fold: sin esto el navegador
+// no pide las fuentes hasta parsear el CSS y el texto se repinta al llegar
+// Inter (parece que la página carga dos veces). El peso 500 solo se usa en el
+// menú móvil desplegado, no hace falta precargarlo.
+import inter400 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import inter600 from "@fontsource/inter/files/inter-latin-600-normal.woff2?url";
+import inter700 from "@fontsource/inter/files/inter-latin-700-normal.woff2?url";
+import inter800 from "@fontsource/inter/files/inter-latin-800-normal.woff2?url";
+
+const PRELOAD_FONTS = [inter400, inter600, inter700, inter800];
+
 export const SITE_URL = "https://albertoapps.info";
 
 const TITLE = "AlbertoApps · Apps Para Clínicas Y Centros De Salud.";
@@ -69,6 +80,9 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {PRELOAD_FONTS.map((href) => (
+      <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+    ))}
     <title>{TITLE}</title>
     <meta name="description" content={DESCRIPTION} />
     <meta name="keywords" content={KEYWORDS.join(", ")} />
@@ -103,8 +117,33 @@ const jsonLd = {
     <meta name="twitter:image" content={`${SITE_URL}/aplogo.png`} />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Marca que hay JS: los reveals de scroll (.reveal) solo se ocultan bajo html.js,
+         así el contenido siempre es visible sin JavaScript. -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<script>
+  // Reveals de scroll: sustituye a framer-motion (whileInView + once: true).
+  // Cada elemento .reveal se anima una sola vez al entrar en el viewport;
+  // el retardo escalonado se controla con la custom property --rd.
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.2, rootMargin: "0px 0px -8% 0px" }
+  );
+
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>

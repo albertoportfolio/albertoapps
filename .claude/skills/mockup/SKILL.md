@@ -11,22 +11,23 @@ documenta cómo está montado para editarlo sin romper nada.
 
 ## Archivos clave
 
-- `src/components/magicui/iphone.tsx` — componente Magic UI (iPhone 15 Pro). Es un SVG con
-  Dynamic Island. Adaptado al proyecto: además de `src`/`videoSrc` acepta **`children`**
-  para renderizar una pantalla a medida dentro del marco.
-- `src/components/Hero.tsx` — usa `<Iphone>` con la pantalla (`.phone-screen`) como `children`.
-  El teléfono va en la columna `.hero-visual` con animación de entrada + flotación.
+- `src/components/magicui/Iphone.astro` — componente Magic UI (iPhone 15 Pro) portado a
+  Astro estático (cero JS, sin Tailwind). Es un SVG con Dynamic Island; la pantalla a
+  medida se pasa como `<slot />` y se recorta con la máscara `#screenPunch`.
+- `src/components/Hero.astro` — usa `<Iphone>` con la pantalla (`.phone-screen`) dentro.
+  El teléfono va en la columna `.hero-visual` con animación CSS de entrada
+  (`hero-visual-in`) + flotación (`phone-float`).
 - `src/styles/globals.css` — todos los estilos del mockup, en el bloque
   `/* ---------- Hero: layout de dos columnas + iPhone mockup ---------- */`
-  (clases con prefijo `.ps-*` para la pantalla, más `.hero-phone` / `.hero-visual`).
+  (clases con prefijo `.ps-*` para la pantalla, `.iphone*` para el marco/posición de la
+  pantalla, más `.hero-phone` / `.hero-visual`).
 
-## Tailwind
+## Sin Tailwind
 
-- El proyecto NO usa Tailwind salvo **exclusivamente para este componente**.
-- Config: `tailwind.config.ts` (con `corePlugins.preflight: false`), `postcss.config.mjs`,
-  y `@tailwind utilities;` al inicio de `src/styles/globals.css`. No añadir `@tailwind base`.
-- Las clases Tailwind solo deben aparecer dentro de `src/components/magicui/iphone.tsx`.
-  El resto de la UI (la pantalla `.ps-*`) usa CSS plano.
+- El proyecto ya NO usa Tailwind (se eliminó junto con React/framer-motion). Todo es CSS
+  plano en `globals.css`; el posicionamiento de la pantalla dentro del marco son las
+  clases `.iphone`, `.iphone-screen` y `.iphone-frame` (porcentajes derivados de la
+  geometría del SVG: pantalla 389.5×843.5 en marco 433×882, radio 55.75).
 
 ## Estructura de la pantalla (`.phone-screen`)
 
@@ -44,9 +45,9 @@ documenta cómo está montado para editarlo sin romper nada.
 - **Fondo de pantalla:** degradado azul profesional (`#1b3a6b → #0c1f42`).
 - **Tiles/acciones:** blancos con sombra; texto `#0f1f42`, subtítulos `#64748b`.
 - **Acento azul:** `linear-gradient(120deg, #2563eb, #3b82f6)`.
-- **Marco del iPhone:** gris apagado `#4a4b55` (variante clara editada en `iphone.tsx`).
-  Para cambiarlo, editar el valor `#4a4b55` en `src/components/magicui/iphone.tsx`.
-  Envolver en `className="...dark"` activaría la variante oscura de Magic UI (`#404040`).
+- **Marco del iPhone:** gris apagado `#4a4b55`. Para cambiarlo, editar los atributos
+  `fill`/`stroke` con ese valor en `src/components/magicui/Iphone.astro` (los colores
+  están inlinados en el SVG; ya no hay variantes dark de Tailwind).
 
 ## Reglas al editar
 

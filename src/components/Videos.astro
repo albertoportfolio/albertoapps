@@ -1,0 +1,78 @@
+---
+import { videos, site } from "../data/site";
+---
+
+<section id="videos" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">Vídeos</span>
+      <h2 class="section-title">Mis proyectos en acción</h2>
+      <p class="section-sub">
+        Demos en vídeo de algunos proyectos. Encuentra más en mi canal de
+        YouTube.
+      </p>
+    </div>
+
+    <div class="videos-grid">
+      {videos.map((v, i) => (
+        <article class="card video-card reveal reveal-scale" style={`--rd: ${i * 0.1}s`}>
+          <div class="video-frame">
+            {/* Facade: solo la miniatura; el player de YouTube se carga al pulsar */}
+            <button
+              class="video-facade"
+              type="button"
+              data-id={v.youtubeId}
+              data-title={v.title}
+              aria-label={`Reproducir vídeo: ${v.title}`}
+            >
+              <img
+                src={`https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width="480"
+                height="360"
+              />
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5.14v13.72L19 12 8 5.14Z"></path>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <h3>{v.title}</h3>
+        </article>
+      ))}
+    </div>
+
+    <div class="projects-cta reveal reveal-fade" style="--rd: 0.2s">
+      <a
+        href={site.youtube}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-ghost"
+      >
+        Ver mi canal de YouTube →
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Sustituye la miniatura por el iframe de YouTube solo cuando el usuario pulsa.
+  document.querySelectorAll<HTMLButtonElement>(".video-facade").forEach((btn) => {
+    btn.addEventListener(
+      "click",
+      () => {
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.id}?autoplay=1`;
+        iframe.title = btn.dataset.title ?? "Vídeo";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        btn.replaceWith(iframe);
+      },
+      { once: true }
+    );
+  });
+</script>

@@ -1,0 +1,224 @@
+---
+import { site } from "../data/site";
+
+const COUNTRIES = [
+  { flag: "🇪🇸", dial: "+34" },
+  { flag: "🇺🇸", dial: "+1" },
+  { flag: "🇬🇧", dial: "+44" },
+  { flag: "🇮🇪", dial: "+353" },
+  { flag: "🇫🇷", dial: "+33" },
+  { flag: "🇩🇪", dial: "+49" },
+  { flag: "🇵🇹", dial: "+351" },
+  { flag: "🇮🇹", dial: "+39" },
+  { flag: "🇳🇱", dial: "+31" },
+  { flag: "🇧🇪", dial: "+32" },
+  { flag: "🇨🇭", dial: "+41" },
+  { flag: "🇦🇹", dial: "+43" },
+  { flag: "🇸🇪", dial: "+46" },
+  { flag: "🇳🇴", dial: "+47" },
+  { flag: "🇩🇰", dial: "+45" },
+  { flag: "🇫🇮", dial: "+358" },
+  { flag: "🇵🇱", dial: "+48" },
+  { flag: "🇷🇴", dial: "+40" },
+  { flag: "🇬🇷", dial: "+30" },
+  { flag: "🇲🇽", dial: "+52" },
+  { flag: "🇦🇷", dial: "+54" },
+  { flag: "🇨🇴", dial: "+57" },
+  { flag: "🇨🇱", dial: "+56" },
+  { flag: "🇧🇷", dial: "+55" },
+  { flag: "🇵🇪", dial: "+51" },
+  { flag: "🇻🇪", dial: "+58" },
+  { flag: "🇦🇺", dial: "+61" },
+  { flag: "🇯🇵", dial: "+81" },
+];
+---
+
+<section id="contacto" class="section">
+  <div class="container contact-wrap">
+    <div class="contact-info reveal reveal-left">
+      <span class="section-kicker">Contacto</span>
+      <h2>¿Tienes una idea? Hablemos.</h2>
+      <p>
+        Cuéntame qué app o web necesitas y te responderé lo antes posible con
+        una propuesta sin compromiso.
+      </p>
+      <div class="contact-channels">
+        <a class="channel" href={`mailto:${site.email}`}>
+          <span class="ico">✉️</span> {site.email}
+        </a>
+        <a class="channel" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+          <span class="ico">💼</span> LinkedIn
+        </a>
+        <a class="channel" href={site.github} target="_blank" rel="noopener noreferrer">
+          <span class="ico">💻</span> GitHub
+        </a>
+      </div>
+    </div>
+
+    <form
+      class="form reveal reveal-right"
+      style="--rd: 0.1s"
+      novalidate
+      data-endpoint={`https://formsubmit.co/ajax/${site.email}`}
+      data-email={site.email}
+    >
+      <!-- Configuración de FormSubmit -->
+      <input type="hidden" name="_subject" value="Nuevo contacto desde albertoapps.info" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <!-- Honeypot anti-spam -->
+      <input type="text" name="_honey" style="display: none" tabindex="-1" autocomplete="off" />
+      <!-- Teléfono completo (prefijo + número) para FormSubmit; se rellena por JS al enviar -->
+      <input type="hidden" name="phone" value="" />
+
+      <div class="field">
+        <label for="name">Nombre</label>
+        <input id="name" name="name" type="text" placeholder="Tu nombre" autocomplete="name" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="email">
+            Correo <span class="req">*</span>
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="tu@correo.com"
+            autocomplete="email"
+          />
+          <span class="field-error" data-error-for="email" hidden></span>
+        </div>
+        <div class="field">
+          <label for="phone">
+            Móvil <span class="req">*</span>
+          </label>
+          <div class="phone-field">
+            <select class="phone-prefix" aria-label="Prefijo del país">
+              {COUNTRIES.map((c) => (
+                <option value={c.dial} selected={c.dial === "+34"}>
+                  {c.flag} {c.dial}
+                </option>
+              ))}
+            </select>
+            <input
+              id="phone"
+              type="tel"
+              class="phone-number"
+              placeholder="612 345 678"
+              autocomplete="tel-national"
+            />
+          </div>
+          <span class="field-error" data-error-for="phone" hidden></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">
+          ¿Qué app o web necesitas? <span class="req">*</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          placeholder="Describe tu idea: tipo de app, funcionalidades, plazos..."></textarea>
+        <span class="field-error" data-error-for="message" hidden></span>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+
+      <p class="form-status" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  const form = document.querySelector<HTMLFormElement>("#contacto .form")!;
+  const email = form.querySelector<HTMLInputElement>("#email")!;
+  const prefix = form.querySelector<HTMLSelectElement>(".phone-prefix")!;
+  const phone = form.querySelector<HTMLInputElement>("#phone")!;
+  const phoneField = form.querySelector<HTMLElement>(".phone-field")!;
+  const hiddenPhone = form.querySelector<HTMLInputElement>('input[name="phone"]')!;
+  const message = form.querySelector<HTMLTextAreaElement>("#message")!;
+  const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+  const status = form.querySelector<HTMLParagraphElement>(".form-status")!;
+
+  const setError = (name: string, control: HTMLElement, text: string | null) => {
+    const span = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`)!;
+    span.hidden = !text;
+    span.textContent = text ?? "";
+    // El móvil marca el contenedor .phone-field; el resto, el propio control
+    const target = name === "phone" ? phoneField : control;
+    target.classList.toggle("invalid", !!text);
+    control.setAttribute("aria-invalid", String(!!text));
+  };
+
+  const validate = () => {
+    let ok = true;
+    const emailVal = email.value.trim();
+    const phoneVal = phone.value.trim();
+    const messageVal = message.value.trim();
+
+    if (!emailVal) {
+      setError("email", email, "El correo es obligatorio.");
+      ok = false;
+    } else if (!EMAIL_RE.test(emailVal)) {
+      setError("email", email, "Introduce un correo válido.");
+      ok = false;
+    } else setError("email", email, null);
+
+    if (!phoneVal) {
+      setError("phone", phone, "El móvil es obligatorio.");
+      ok = false;
+    } else if (phoneVal.replace(/\D/g, "").length < 6) {
+      setError("phone", phone, "Introduce un número válido.");
+      ok = false;
+    } else setError("phone", phone, null);
+
+    if (!messageVal) {
+      setError("message", message, "Cuéntame qué app o web necesitas.");
+      ok = false;
+    } else setError("message", message, null);
+
+    return ok;
+  };
+
+  const showStatus = (kind: "ok" | "error", text: string) => {
+    status.hidden = false;
+    status.className = `form-status ${kind}`;
+    status.textContent = text;
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    hiddenPhone.value = `${prefix.value} ${phone.value.trim()}`.trim();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando...";
+    status.hidden = true;
+
+    try {
+      const res = await fetch(form.dataset.endpoint!, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
+      form.reset();
+    } catch {
+      showStatus(
+        "error",
+        `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`
+      );
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Enviar mensaje →";
+    }
+  });
+</script>

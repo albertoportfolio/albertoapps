@@ -1,0 +1,125 @@
+---
+import { site } from "../data/site";
+import Iphone from "./magicui/Iphone.astro";
+
+const stats = [
+  { value: "Flutter", label: "Apps iOS y Android" },
+  { value: "React", label: "Webs · TypeScript" },
+  { value: "Java", label: "API con Spring" },
+];
+---
+
+<section id="inicio" class="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <span class="hero-badge">Disponible para nuevos proyectos</span>
+
+      <h1>
+        {site.tagline.split(" ").slice(0, 2).join(" ")}{" "}
+        <span class="grad">{site.tagline.split(" ").slice(2).join(" ")}</span>
+      </h1>
+
+      <p>
+        Creo apps móviles y webs especializadas en{" "}
+        <strong>seguimiento de pacientes</strong> y{" "}
+        <strong>fidelización</strong> para clínicas y centros de salud. Diseño
+        cuidado, rendimiento y entrega profesional, de la idea a producción.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#contacto" class="btn btn-primary">Cuéntame tu idea →</a>
+        <a href="#proyectos" class="btn btn-ghost">Ver proyectos</a>
+      </div>
+
+      <div class="hero-stats">
+        {stats.map((s) => (
+          <div class="hero-stat">
+            <strong>{s.value}</strong>
+            <span>{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-phone">
+        <Iphone>
+          <div class="phone-screen">
+            <div class="ps-statusbar">
+              <span>9:41</span>
+              <span class="ps-statusbar-icons">
+                <i></i>
+                <i></i>
+                <i class="ps-battery"></i>
+              </span>
+            </div>
+
+            <div class="ps-header">
+              <div>
+                <span class="ps-hello">Hola, María</span>
+                <strong class="ps-title">Clínica Vital</strong>
+              </div>
+              <span class="ps-avatar">M</span>
+            </div>
+
+            <span class="ps-section">Seguimiento</span>
+            <div class="ps-grid">
+              <div class="ps-tile ps-tile-wide ps-tile-accent">
+                <span class="ps-tile-label">Próxima cita</span>
+                <strong class="ps-tile-value">12 Jun · 10:30</strong>
+                <span class="ps-tile-sub">Dra. Ruiz · Revisión general</span>
+              </div>
+              <div class="ps-tile">
+                <span class="ps-tile-label">Tensión</span>
+                <strong class="ps-tile-value">120/80</strong>
+                <span class="ps-tile-sub">mmHg · Hoy</span>
+              </div>
+              <div class="ps-tile">
+                <span class="ps-tile-label">Tratamiento</span>
+                <strong class="ps-tile-value">8/10</strong>
+                <span class="ps-tile-sub">Adherencia 80%</span>
+              </div>
+              <div class="ps-tile ps-tile-wide">
+                <span class="ps-tile-label">Última analítica</span>
+                <strong class="ps-tile-value">Resultados normales</strong>
+                <span class="ps-tile-sub">3 Jun</span>
+              </div>
+            </div>
+
+            <span class="ps-section">Accesos rápidos</span>
+            <div class="ps-actions">
+              <div class="ps-action ps-action-primary">
+                <span class="ps-action-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"></path>
+                  </svg>
+                </span>
+                Pedir cita
+              </div>
+              <div class="ps-action">
+                <span class="ps-action-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <path d="M14 2v6h6M8 13h8M8 17h6"></path>
+                  </svg>
+                </span>
+                Consultar historial
+              </div>
+            </div>
+
+            <div class="ps-nav">
+              <span class="ps-nav-item active"></span>
+              <span class="ps-nav-item"></span>
+              <span class="ps-nav-item"></span>
+              <span class="ps-nav-item"></span>
+            </div>
+          </div>
+        </Iphone>
+      </div>
+    </div>
+  </div>
+</section>
