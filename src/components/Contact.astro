@@ -96,7 +96,7 @@ const COUNTRIES = [
             Móvil <span class="req">*</span>
           </label>
           <div class="phone-field">
-            <select class="phone-prefix" aria-label="Prefijo del país">
+            <select id="phone-prefix" class="phone-prefix" aria-label="Prefijo del país" autocomplete="tel-country-code">
               {COUNTRIES.map((c) => (
                 <option value={c.dial} selected={c.dial === "+34"}>
                   {c.flag} {c.dial}
