@@ -98,10 +98,11 @@ a {
    El retardo escalonado se pasa con --rd; la dirección con --rx/--ry/--rs. */
 
 .js .reveal {
-  /* 0.01 y no 0: Chrome descarta como candidato a LCP cualquier paint con
-     opacity 0; si todo el above-the-fold arranca en 0, Lighthouse falla con
-     NO_LCP. Con 0.01 el elemento es invisible pero el paint sí cuenta. */
-  opacity: 0.01;
+  /* 0 exacto, no 0.01: con 0 axe trata el elemento como oculto y no evalúa
+     su contraste; con 0.01 lo evalúa fundido con el fondo y Lighthouse
+     suspende accesibilidad en todo lo no revelado. El LCP no se ve afectado:
+     los .reveal viven bajo el pliegue y el hero no usa esta clase. */
+  opacity: 0;
 }
 
 .js .reveal.in-view {
@@ -133,7 +134,9 @@ a {
 
 @keyframes reveal-in {
   from {
-    /* 0.01 por LCP: ver el comentario de .js .reveal */
+    /* 0.01 y no 0: Chrome descarta como candidato a LCP cualquier paint con
+       opacity 0. El hero usa esta animación con fill "both" y retardos, así
+       que con 0 el h1 nunca puntúa y Lighthouse falla con NO_LCP. */
     opacity: 0.01;
     transform: translate(var(--rx, 0px), var(--ry, 24px)) scale(var(--rs, 1));
   }
@@ -142,7 +145,7 @@ a {
 /* Fundido sin desplazamiento: lo usan los reveals bajo prefers-reduced-motion */
 @keyframes fade-in {
   from {
-    /* 0.01 por LCP: ver el comentario de .js .reveal */
+    /* 0.01 por LCP, igual que reveal-in */
     opacity: 0.01;
   }
 }
