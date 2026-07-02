@@ -98,7 +98,10 @@ a {
    El retardo escalonado se pasa con --rd; la dirección con --rx/--ry/--rs. */
 
 .js .reveal {
-  opacity: 0;
+  /* 0.01 y no 0: Chrome descarta como candidato a LCP cualquier paint con
+     opacity 0; si todo el above-the-fold arranca en 0, Lighthouse falla con
+     NO_LCP. Con 0.01 el elemento es invisible pero el paint sí cuenta. */
+  opacity: 0.01;
 }
 
 .js .reveal.in-view {
@@ -130,7 +133,8 @@ a {
 
 @keyframes reveal-in {
   from {
-    opacity: 0;
+    /* 0.01 por LCP: ver el comentario de .js .reveal */
+    opacity: 0.01;
     transform: translate(var(--rx, 0px), var(--ry, 24px)) scale(var(--rs, 1));
   }
 }
@@ -138,7 +142,8 @@ a {
 /* Fundido sin desplazamiento: lo usan los reveals bajo prefers-reduced-motion */
 @keyframes fade-in {
   from {
-    opacity: 0;
+    /* 0.01 por LCP: ver el comentario de .js .reveal */
+    opacity: 0.01;
   }
 }
 
@@ -291,7 +296,10 @@ a {
   display: block;
   padding: 0.6rem 0;
   color: var(--text-muted);
-  font-weight: 500;
+  /* 600 y no 500: el menú colapsado se maqueta igualmente (grid-rows 0fr),
+     así que cualquier peso usado aquí se descarga en cada visita; 600 ya
+     está cargado por el resto de la página. */
+  font-weight: 600;
 }
 
 .nav-mobile a:hover {
