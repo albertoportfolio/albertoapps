@@ -1,23 +1,13 @@
 import type { APIRoute } from 'astro';
+import { WEB3FORMS_ACCESS_KEY } from 'astro:env/server';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const apiKey = process.env.WEB3FORMS_ACCESS_KEY;
+    const data = await request.json();
 
-    if (!apiKey) {
-      console.error("ERROR: No se encontró WEB3FORMS_ACCESS_KEY en las variables de Vercel");
-      return new Response(
-        JSON.stringify({ success: false, message: "Falta la API Key en Vercel" }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
-    }
-
-    const bodyText = await request.text();
-    const data = JSON.parse(bodyText);
-
-    const res = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,20 +15,25 @@ export const POST: APIRoute = async ({ request }) => {
       },
       body: JSON.stringify({
         ...data,
-        access_key: apiKey,
+        access_key: WEB3FORMS_ACCESS_KEY,
       }),
     });
 
-    const result = await res.json();
+    const result = await response.json();
 
     return new Response(JSON.stringify(result), {
-      status: res.status,
+      status: response.status,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error: any) {
-    console.error("DETALLE_DEL_ERROR:", error?.stack || error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+
     return new Response(
-      JSON.stringify({ success: false, message: error?.message || "Error interno" }),
+      JSON.stringify({
+        success: false,
+        message: "Error procesando el formulario en el servidor",
+        error: errorMessage,
+      }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
