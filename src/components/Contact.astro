@@ -134,6 +134,8 @@ const COUNTRIES = [
 
 <script>
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const WEB3FORMS_ACCESS_KEY = "412f062b-3bde-4d11-bf62-3fb2cd27a934";
+  const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
   const form = document.querySelector<HTMLFormElement>("#contacto .form")!;
   const email = form.querySelector<HTMLInputElement>("#email")!;
@@ -203,18 +205,21 @@ const COUNTRIES = [
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      const res = await fetch(form.dataset.endpoint!, {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json" 
+          "Accept": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          access_key: WEB3FORMS_ACCESS_KEY,
+        }),
       });
 
       const result = await res.json();
 
-      if (res.status === 200 && result.success) {
+      if (result.success) {
         showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
         form.reset();
       } else {
