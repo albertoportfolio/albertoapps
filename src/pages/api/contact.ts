@@ -1,10 +1,5 @@
-import type { APIRoute } from 'astro';
-
-export const prerender = false;
-
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Leemos la variable con la API nativa de Astro
     const apiKey = import.meta.env.WEB3FORMS_ACCESS_KEY;
     console.log("API KEY existe?", !!apiKey);
 
@@ -16,6 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const data = await request.json();
+    console.log("Data recibida:", data); // 👈 nuevo
 
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -29,13 +25,17 @@ export const POST: APIRoute = async ({ request }) => {
       }),
     });
 
+    console.log("Status de Web3Forms:", response.status); // 👈 nuevo
+
     const result = await response.json();
+    console.log("Respuesta de Web3Forms:", result); // 👈 nuevo
 
     return new Response(JSON.stringify(result), {
       status: response.status,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error: unknown) {
+    console.error("Error capturado:", error); // 👈 nuevo
     const msg = error instanceof Error ? error.message : "Error interno";
     return new Response(
       JSON.stringify({ success: false, message: msg }),
