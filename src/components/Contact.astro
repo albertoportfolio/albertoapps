@@ -59,16 +59,14 @@ const COUNTRIES = [
       class="form reveal reveal-right"
       style="--rd: 0.1s"
       novalidate
-      data-endpoint={`https://formsubmit.co/ajax/${site.email}`}
+      data-endpoint="/api/contact"
       data-email={site.email}
     >
-      <!-- Configuración de FormSubmit -->
-      <input type="hidden" name="_subject" value="Nuevo contacto desde albertoapps.info" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_captcha" value="false" />
-      <!-- Honeypot anti-spam -->
-      <input type="text" name="_honey" style="display: none" tabindex="-1" autocomplete="off" />
-      <!-- Teléfono completo (prefijo + número) para FormSubmit; se rellena por JS al enviar -->
+      <!-- Asunto y Honeypot anti-spam -->
+      <input type="hidden" name="subject" value="Nuevo contacto desde albertoapps.info" />
+      <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
+      <!-- Teléfono completo (prefijo + número) se rellena por JS al enviar -->
       <input type="hidden" name="phone" value="" />
 
       <div class="field">
@@ -151,7 +149,6 @@ const COUNTRIES = [
     const span = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`)!;
     span.hidden = !text;
     span.textContent = text ?? "";
-    // El móvil marca el contenedor .phone-field; el resto, el propio control
     const target = name === "phone" ? phoneField : control;
     target.classList.toggle("invalid", !!text);
     control.setAttribute("aria-invalid", String(!!text));
@@ -203,24 +200,32 @@ const COUNTRIES = [
     status.hidden = true;
 
     try {
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
 
-  const res = await fetch(form.dataset.endpoint!, {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
-      "Accept": "application/json" 
-    },
-    body: JSON.stringify(data),
-  });
+      const res = await fetch(form.dataset.endpoint!, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json" 
+        },
+        body: JSON.stringify(data),
+      });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
-  form.reset();
-} catch {
-  showStatus("error", `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`);
-} finally {
+      const result = await res.json();
+
+      if (res.status === 200 && result.success) {
+        showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
+        form.reset();
+      } else {
+        throw new Error(result.message || "Error al enviar");
+      }
+    } catch {
+      showStatus(
+        "error",
+        `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`
+      );
+    } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Enviar mensaje →";
     }
