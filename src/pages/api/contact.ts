@@ -6,6 +6,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     // Leemos la variable con la API nativa de Astro
     const apiKey = import.meta.env.WEB3FORMS_ACCESS_KEY;
+    console.log("API KEY existe?", !!apiKey);
 
     if (!apiKey) {
       return new Response(
