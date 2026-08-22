@@ -203,20 +203,24 @@ const COUNTRIES = [
     status.hidden = true;
 
     try {
-      const res = await fetch(form.dataset.endpoint!, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
-      form.reset();
-    } catch {
-      showStatus(
-        "error",
-        `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`
-      );
-    } finally {
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  const res = await fetch(form.dataset.endpoint!, {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Accept": "application/json" 
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
+  form.reset();
+} catch {
+  showStatus("error", `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`);
+} finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Enviar mensaje →";
     }
