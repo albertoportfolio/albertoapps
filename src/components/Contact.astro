@@ -33,14 +33,14 @@ const COUNTRIES = [
 ];
 ---
 
-<section id="contacto" class="section">
+<section id="contact" class="section">
   <div class="container contact-wrap">
     <div class="contact-info reveal reveal-left">
-      <span class="section-kicker">Contacto</span>
-      <h2>¿Tienes una idea? Hablemos.</h2>
+      <span class="section-kicker">Contact</span>
+      <h2>Have an idea? Let's talk.</h2>
       <p>
-        Cuéntame qué app o web necesitas y te responderé lo antes posible con
-        una propuesta sin compromiso.
+        Tell me what app or website you need and I'll get back to you as
+        soon as possible with a no-obligation proposal.
       </p>
       <div class="contact-channels">
         <a class="channel" href={`mailto:${site.email}`}>
@@ -62,39 +62,39 @@ const COUNTRIES = [
       data-endpoint="/api/contact"
       data-email={site.email}
     >
-      <!-- Asunto y Honeypot anti-spam -->
-      <input type="hidden" name="subject" value="Nuevo contacto desde albertoapps.info" />
+      <!-- Subject and anti-spam honeypot -->
+      <input type="hidden" name="subject" value="New contact from albertoapps.info" />
       <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
 
-      <!-- Teléfono completo (prefijo + número) se rellena por JS al enviar -->
+      <!-- Full phone number (prefix + number) filled by JS on submit -->
       <input type="hidden" name="phone" value="" />
 
       <div class="field">
-        <label for="name">Nombre</label>
-        <input id="name" name="name" type="text" placeholder="Tu nombre" autocomplete="name" />
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" />
       </div>
 
       <div class="field-row">
         <div class="field">
           <label for="email">
-            Correo <span class="req">*</span>
+            Email <span class="req">*</span>
           </label>
           <input
             id="email"
             name="email"
             type="email"
             required
-            placeholder="tu@correo.com"
+            placeholder="you@email.com"
             autocomplete="email"
           />
           <span class="field-error" data-error-for="email" hidden></span>
         </div>
         <div class="field">
           <label for="phone">
-            Móvil <span class="req">*</span>
+            Mobile <span class="req">*</span>
           </label>
           <div class="phone-field">
-            <select id="phone-prefix" class="phone-prefix" aria-label="Prefijo del país" autocomplete="tel-country-code">
+            <select id="phone-prefix" class="phone-prefix" aria-label="Country code" autocomplete="tel-country-code">
               {COUNTRIES.map((c) => (
                 <option value={c.dial} selected={c.dial === "+34"}>
                   {c.flag} {c.dial}
@@ -115,17 +115,17 @@ const COUNTRIES = [
 
       <div class="field">
         <label for="message">
-          ¿Qué app o web necesitas? <span class="req">*</span>
+          What app or website do you need? <span class="req">*</span>
         </label>
         <textarea
           id="message"
           name="message"
           required
-          placeholder="Describe tu idea: tipo de app, funcionalidades, plazos..."></textarea>
+          placeholder="Describe your idea: type of app, features, timeline..."></textarea>
         <span class="field-error" data-error-for="message" hidden></span>
       </div>
 
-      <button type="submit" class="btn btn-primary">Enviar mensaje →</button>
+      <button type="submit" class="btn btn-primary">Send message →</button>
 
       <p class="form-status" hidden></p>
     </form>
@@ -137,7 +137,7 @@ const COUNTRIES = [
   const WEB3FORMS_ACCESS_KEY = "412f062b-3bde-4d11-bf62-3fb2cd27a934";
   const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
-  const form = document.querySelector<HTMLFormElement>("#contacto .form")!;
+  const form = document.querySelector<HTMLFormElement>("#contact .form")!;
   const email = form.querySelector<HTMLInputElement>("#email")!;
   const prefix = form.querySelector<HTMLSelectElement>(".phone-prefix")!;
   const phone = form.querySelector<HTMLInputElement>("#phone")!;
@@ -163,23 +163,23 @@ const COUNTRIES = [
     const messageVal = message.value.trim();
 
     if (!emailVal) {
-      setError("email", email, "El correo es obligatorio.");
+      setError("email", email, "Email is required.");
       ok = false;
     } else if (!EMAIL_RE.test(emailVal)) {
-      setError("email", email, "Introduce un correo válido.");
+      setError("email", email, "Please enter a valid email.");
       ok = false;
     } else setError("email", email, null);
 
     if (!phoneVal) {
-      setError("phone", phone, "El móvil es obligatorio.");
+      setError("phone", phone, "Mobile number is required.");
       ok = false;
     } else if (phoneVal.replace(/\D/g, "").length < 6) {
-      setError("phone", phone, "Introduce un número válido.");
+      setError("phone", phone, "Please enter a valid number.");
       ok = false;
     } else setError("phone", phone, null);
 
     if (!messageVal) {
-      setError("message", message, "Cuéntame qué app o web necesitas.");
+      setError("message", message, "Tell me what app or website you need.");
       ok = false;
     } else setError("message", message, null);
 
@@ -198,7 +198,7 @@ const COUNTRIES = [
 
     hiddenPhone.value = `${prefix.value} ${phone.value.trim()}`.trim();
     submitBtn.disabled = true;
-    submitBtn.textContent = "Enviando...";
+    submitBtn.textContent = "Sending...";
     status.hidden = true;
 
     try {
@@ -220,19 +220,19 @@ const COUNTRIES = [
       const result = await res.json();
 
       if (result.success) {
-        showStatus("ok", "✅ ¡Mensaje enviado! Te responderé muy pronto.");
+        showStatus("ok", "✅ Message sent! I'll get back to you soon.");
         form.reset();
       } else {
-        throw new Error(result.message || "Error al enviar");
+        throw new Error(result.message || "Error sending message");
       }
     } catch {
       showStatus(
         "error",
-        `❌ No se pudo enviar. Escríbeme directamente a ${form.dataset.email}.`
+        `❌ Couldn't send the message. Please email me directly at ${form.dataset.email}.`
       );
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = "Enviar mensaje →";
+      submitBtn.textContent = "Send message →";
     }
   });
 </script>

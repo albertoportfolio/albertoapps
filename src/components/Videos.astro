@@ -5,11 +5,10 @@ import { videos, site } from "../data/site";
 <section id="videos" class="section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-kicker">Vídeos</span>
-      <h2 class="section-title">Mis proyectos en acción</h2>
+      <span class="section-kicker">Videos</span>
+      <h2 class="section-title">My projects in action</h2>
       <p class="section-sub">
-        Demos en vídeo de algunos proyectos. Encuentra más en mi canal de
-        YouTube.
+        Video demos of some projects. Find more on my YouTube channel.
       </p>
     </div>
 
@@ -17,13 +16,13 @@ import { videos, site } from "../data/site";
       {videos.map((v, i) => (
         <article class="card video-card reveal reveal-scale" style={`--rd: ${i * 0.1}s`}>
           <div class="video-frame">
-            {/* Facade: solo la miniatura; el player de YouTube se carga al pulsar */}
+            {/* Facade: only the thumbnail; the YouTube player loads on click */}
             <button
               class="video-facade"
               type="button"
               data-id={v.youtubeId}
               data-title={v.title}
-              aria-label={`Reproducir vídeo: ${v.title}`}
+              aria-label={`Play video: ${v.title}`}
             >
               <img
                 src={`https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`}
@@ -52,21 +51,21 @@ import { videos, site } from "../data/site";
         rel="noopener noreferrer"
         class="btn btn-ghost"
       >
-        Ver mi canal de YouTube →
+        See my YouTube channel →
       </a>
     </div>
   </div>
 </section>
 
 <script>
-  // Sustituye la miniatura por el iframe de YouTube solo cuando el usuario pulsa.
+  // Replace the thumbnail with the YouTube iframe only when the user clicks.
   document.querySelectorAll<HTMLButtonElement>(".video-facade").forEach((btn) => {
     btn.addEventListener(
       "click",
       () => {
         const iframe = document.createElement("iframe");
         iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.id}?autoplay=1`;
-        iframe.title = btn.dataset.title ?? "Vídeo";
+        iframe.title = btn.dataset.title ?? "Video";
         iframe.allow =
           "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
         iframe.allowFullscreen = true;

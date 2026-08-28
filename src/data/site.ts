@@ -1,17 +1,17 @@
 // ============================================================
-// CONFIGURACIÓN DEL SITIO
-// Edita este archivo para actualizar tus datos, proyectos y vídeos.
-// Los valores marcados con TODO son marcadores: sustitúyelos por
-// tus enlaces reales y la web se actualizará automáticamente.
+// SITE CONFIGURATION
+// Edit this file to update your info, projects, and videos.
+// Values marked with TODO are placeholders: replace them with
+// your real links and the site will update automatically.
 // ============================================================
 
 export const site = {
   name: "Alberto",
   brand: "AlbertoApps",
-  role: "Desarrollador Freelance · Flutter & Web",
-  tagline: "Apps Especializadas Para Clínicas Y Centros De Salud",
+  role: "Freelance Developer · Flutter & Web",
+  tagline: "Custom Apps Built For Your Business",
   email: "contact@albertoapps.info",
-  // TODO: sustituye por tus perfiles reales
+  // TODO: replace with your real profiles
   github: "https://github.com/albertoportfolio",
   linkedin: "https://es.linkedin.com/in/albertopegomez",
   youtube: "https://www.youtube.com/@appsalberto",
@@ -21,30 +21,30 @@ export type Project = {
   title: string;
   description: string;
   tags: string[];
-  repo: string; // URL del repositorio en GitHub
-  demo?: string; // URL de demo o tienda de apps (opcional)
+  repo: string; // GitHub repository URL
+  demo?: string; // Demo or app store URL (optional)
 };
 
-// TODO: sustituye por tus proyectos reales de GitHub
+// TODO: replace with your real GitHub projects
 export const projects: Project[] = [
   {
-    title: "H-Baby - App de salud para bebés",
+    title: "H-Baby - Baby health app",
     description:
-      "Aplicación móvil dedicada a la gestión de la salud de los bebés.",
+      "Mobile application dedicated to managing babies' health.",
     tags: ["Flutter", "Dart", "Firebase"],
     repo: "https://github.com/albertoportfolio/Bhealth",
   },
   {
-    title: "Maestro Bot - Juego de lógica",
+    title: "Maestro Bot - Logic game",
     description:
-      "Juego web y móvil hecho con React, phaser y react native",
+      "Web and mobile game built with React, Phaser, and React Native",
     tags: ["React", "TypeScript", "Phaser", "React Native", "Node.js"],
     repo: "https://github.com/albertoportfolio/LightbotGame",
   },
   {
-    title: "Parallax Castle - Web de diseño parallax",
+    title: "Parallax Castle - Parallax design website",
     description:
-      "Web de diseño parallax con ambiente medieval hecha con React y framer motion",
+      "Parallax design website with a medieval theme, built with React and Framer Motion",
     tags: ["React", "Framer Motion"],
     repo: "https://github.com/albertoportfolio/ParallaxCastleWeb",
   },
@@ -52,11 +52,11 @@ export const projects: Project[] = [
 
 export type Video = {
   title: string;
-  // ID del vídeo de YouTube (lo que va después de "watch?v=" en la URL)
+  // YouTube video ID (what comes after "watch?v=" in the URL)
   youtubeId: string;
 };
 
-// TODO: sustituye por los IDs de tus vídeos reales de YouTube
+// TODO: replace with your real YouTube video IDs
 export const videos: Video[] = [
   { title: "Maestro Bot", youtubeId: "hRU5l6_9YFM" },
   { title: "Health Baby", youtubeId: "33YsocPVqVk" },

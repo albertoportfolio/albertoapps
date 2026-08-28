@@ -3,19 +3,19 @@ import { site } from "../data/site";
 import Iphone from "./magicui/Iphone.astro";
 
 const stats = [
-  { value: "Flutter", label: "Apps iOS y Android" },
-  { value: "React", label: "Webs · TypeScript" },
-  { value: "Java", label: "API con Spring" },
+  { value: "Flutter", label: "iOS & Android Apps" },
+  { value: "React", label: "Websites · TypeScript" },
+  { value: "Java", label: "API with Spring" },
 ];
 ---
 
-<section id="inicio" class="hero">
+<section id="home" class="hero">
   <div class="hero-blob hero-blob-1"></div>
   <div class="hero-blob hero-blob-2"></div>
 
   <div class="container hero-grid">
     <div class="hero-content">
-      <span class="hero-badge">Disponible para nuevos proyectos</span>
+      <span class="hero-badge">Available for new projects</span>
 
       <h1>
         {site.tagline.split(" ").slice(0, 2).join(" ")}{" "}
@@ -23,15 +23,14 @@ const stats = [
       </h1>
 
       <p>
-        Creo apps móviles y webs especializadas en{" "}
-        <strong>seguimiento de pacientes</strong> y{" "}
-        <strong>fidelización</strong> para clínicas y centros de salud. Diseño
-        cuidado, rendimiento y entrega profesional, de la idea a producción.
+        I build <strong>mobile apps</strong> and{" "}
+        <strong>websites</strong> tailored to your business. Careful design, solid performance, and professional
+        delivery, from idea to production.
       </p>
 
       <div class="hero-actions">
-        <a href="#contacto" class="btn btn-primary">Cuéntame tu idea →</a>
-        <a href="#proyectos" class="btn btn-ghost">Ver proyectos</a>
+        <a href="#contact" class="btn btn-primary">Tell me your idea →</a>
+        <a href="#projects" class="btn btn-ghost">View projects</a>
       </div>
 
       <div class="hero-stats">
@@ -59,37 +58,37 @@ const stats = [
 
             <div class="ps-header">
               <div>
-                <span class="ps-hello">Hola, María</span>
-                <strong class="ps-title">Clínica Vital</strong>
+                <span class="ps-hello">Hi, Alex</span>
+                <strong class="ps-title">ProjectHub</strong>
               </div>
-              <span class="ps-avatar">M</span>
+              <span class="ps-avatar">A</span>
             </div>
 
-            <span class="ps-section">Seguimiento</span>
+            <span class="ps-section">Overview</span>
             <div class="ps-grid">
               <div class="ps-tile ps-tile-wide ps-tile-accent">
-                <span class="ps-tile-label">Próxima cita</span>
-                <strong class="ps-tile-value">12 Jun · 10:30</strong>
-                <span class="ps-tile-sub">Dra. Ruiz · Revisión general</span>
+                <span class="ps-tile-label">Active projects</span>
+                <strong class="ps-tile-value">12</strong>
+                <span class="ps-tile-sub">3 due this week</span>
               </div>
               <div class="ps-tile">
-                <span class="ps-tile-label">Tensión</span>
-                <strong class="ps-tile-value">120/80</strong>
-                <span class="ps-tile-sub">mmHg · Hoy</span>
+                <span class="ps-tile-label">Tasks done</span>
+                <strong class="ps-tile-value">84%</strong>
+                <span class="ps-tile-sub">This month</span>
               </div>
               <div class="ps-tile">
-                <span class="ps-tile-label">Tratamiento</span>
-                <strong class="ps-tile-value">8/10</strong>
-                <span class="ps-tile-sub">Adherencia 80%</span>
+                <span class="ps-tile-label">Team</span>
+                <strong class="ps-tile-value">6</strong>
+                <span class="ps-tile-sub">Members online</span>
               </div>
               <div class="ps-tile ps-tile-wide">
-                <span class="ps-tile-label">Última analítica</span>
-                <strong class="ps-tile-value">Resultados normales</strong>
-                <span class="ps-tile-sub">3 Jun</span>
+                <span class="ps-tile-label">Latest update</span>
+                <strong class="ps-tile-value">Deploy successful</strong>
+                <span class="ps-tile-sub">2h ago</span>
               </div>
             </div>
 
-            <span class="ps-section">Accesos rápidos</span>
+            <span class="ps-section">Quick actions</span>
             <div class="ps-actions">
               <div class="ps-action ps-action-primary">
                 <span class="ps-action-ico" aria-hidden="true">
@@ -98,7 +97,7 @@ const stats = [
                     <path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"></path>
                   </svg>
                 </span>
-                Pedir cita
+                New project
               </div>
               <div class="ps-action">
                 <span class="ps-action-ico" aria-hidden="true">
@@ -107,7 +106,7 @@ const stats = [
                     <path d="M14 2v6h6M8 13h8M8 17h6"></path>
                   </svg>
                 </span>
-                Consultar historial
+                View reports
               </div>
             </div>
 

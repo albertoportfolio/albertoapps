@@ -2,16 +2,16 @@
 import { site } from "../data/site";
 
 const links = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#proyectos", label: "Proyectos" },
-  { href: "#videos", label: "Vídeos" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "#services", label: "Services" },
+  { href: "#projects", label: "Projects" },
+  { href: "#videos", label: "Videos" },
+  { href: "#contact", label: "Contact" },
 ];
 ---
 
 <header class="navbar">
-  <nav class="container navbar-inner" aria-label="Principal">
-    <a href="#inicio" class="brand">
+  <nav class="container navbar-inner" aria-label="Main">
+    <a href="#home" class="brand">
       Alberto<span>Apps</span>
     </a>
 
@@ -23,11 +23,11 @@ const links = [
       ))}
     </ul>
 
-    <a href="#contacto" class="btn btn-primary nav-cta">
-      Pide presupuesto
+    <a href="#contact" class="btn btn-primary nav-cta">
+      Get a quote
     </a>
 
-    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
       ☰
     </button>
   </nav>
@@ -55,7 +55,7 @@ const links = [
   const setOpen = (open: boolean) => {
     header.classList.toggle("nav-open", open);
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     toggle.textContent = open ? "✕" : "☰";
   };
 
@@ -63,7 +63,7 @@ const links = [
     setOpen(!header.classList.contains("nav-open"))
   );
 
-  // El menú móvil se cierra al pulsar cualquier enlace
+  // The mobile menu closes when any link is clicked
   header
     .querySelectorAll(".nav-mobile a")
     .forEach((a) => a.addEventListener("click", () => setOpen(false)));

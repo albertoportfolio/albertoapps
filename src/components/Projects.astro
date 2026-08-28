@@ -2,14 +2,14 @@
 import { projects, site } from "../data/site";
 ---
 
-<section id="proyectos" class="section">
+<section id="projects" class="section">
   <div class="container">
     <div class="section-head reveal">
       <span class="section-kicker">Portfolio</span>
-      <h2 class="section-title">Proyectos destacados</h2>
+      <h2 class="section-title">Featured Projects</h2>
       <p class="section-sub">
-        Una selección de apps y webs que he desarrollado. Puedes ver el código
-        en mi GitHub.
+        A selection of apps and websites I've developed. You can check out
+        the code on my GitHub.
       </p>
     </div>
 
@@ -20,7 +20,7 @@ import { projects, site } from "../data/site";
             <span class="project-folder" aria-hidden="true">📂</span>
             <div class="project-links">
               <a href={p.repo} target="_blank" rel="noopener noreferrer">
-                Código ↗
+                Code ↗
               </a>
               {p.demo && (
                 <a href={p.demo} target="_blank" rel="noopener noreferrer">
@@ -47,7 +47,7 @@ import { projects, site } from "../data/site";
         rel="noopener noreferrer"
         class="btn btn-ghost"
       >
-        Ver más en GitHub →
+        See more on GitHub →
       </a>
     </div>
   </div>
